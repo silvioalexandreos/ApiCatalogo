@@ -21,11 +21,11 @@ namespace APICatalago.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Produto>> Get()
+        public async Task<ActionResult<IEnumerable<Produto>>> Get()
         {
             try
             {
-                return _context.Produtos.AsNoTracking().ToList();
+                return await _context.Produtos.AsNoTracking().ToListAsync();
             }
             catch (Exception)
             {
@@ -36,12 +36,12 @@ namespace APICatalago.Controllers
         }
 
         [HttpGet("{id}", Name = "ObterProduto")]
-        public ActionResult<Produto> GetId(int id)
+        public async Task<ActionResult<Produto>> GetId(int id)
         {
             try
             {
-                var produto = _context.Produtos.AsNoTracking()
-                .FirstOrDefault(x => x.ProdutoId == id);
+                var produto = await _context.Produtos.AsNoTracking()
+                .FirstOrDefaultAsync(x => x.ProdutoId == id);
                 if (produto is null)
                 {
                     return NotFound($"Produto com id : { id } não foi encontrado.");

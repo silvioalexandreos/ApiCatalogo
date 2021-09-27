@@ -21,11 +21,11 @@ namespace APICatalago.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Categoria>> Get()
+        public async Task<ActionResult<IEnumerable<Categoria>>> Get()
         {
             try
             {
-                return _context.Categorias.AsNoTracking().ToList();
+                return await _context.Categorias.AsNoTracking().ToListAsync();
             }
             catch (Exception)
             {
@@ -37,12 +37,12 @@ namespace APICatalago.Controllers
         }
 
         [HttpGet("{id}", Name = "ObterCategoria")]
-        public ActionResult<Categoria> GetId(int id)
+        public async Task<ActionResult<Categoria>> GetId(int id)
         {
             try
             {
-                var categoria = _context.Categorias.AsNoTracking()
-                .FirstOrDefault(x => x.CategoriaId == id);
+                var categoria = await _context.Categorias.AsNoTracking()
+                .FirstOrDefaultAsync(x => x.CategoriaId == id);
 
                 if (categoria is null)
                 {
